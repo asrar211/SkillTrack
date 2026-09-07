@@ -5,7 +5,11 @@ import { createAuthToken, getUserById, loginUser, registerUser } from "../servic
 const authCookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
+    // The Render frontend and API use different origins. Cross-origin XHR
+    // requests can only persist/send this httpOnly cookie in production when
+    // it is explicitly marked as cross-site and secure.
+    sameSite: process.env.NODE_ENV === "production" ? "none" as const : "lax" as const,
+    path: "/",
     maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
