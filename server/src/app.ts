@@ -27,9 +27,10 @@ app.use(cookieParser());
 app.use(express.json({limit: "1mb"}));
 app.use(helmet());
 
+const allowedOrigins = process.env.CLIENT_URL ?? "https://skilltrack-ala0.onrender.com";
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: allowedOrigins,
         credentials: true,
     })
 );
