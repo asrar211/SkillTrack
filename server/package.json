@@ -4,6 +4,9 @@
   "description": "Skill Track backend API",
   "main": "dist/app.js",
   "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
