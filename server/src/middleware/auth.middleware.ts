@@ -24,7 +24,11 @@ export const authMiddleware = (
         throw new Error("JWT_SECRET is not defined");
     }
 
-    const token = req.cookies?.token;
+    const authorization = req.get("authorization");
+    const bearerToken = authorization?.startsWith("Bearer ")
+        ? authorization.slice("Bearer ".length).trim()
+        : undefined;
+    const token = req.cookies?.token ?? bearerToken;
 
     if (!token) {
         throw new AppError(

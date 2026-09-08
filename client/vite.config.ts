@@ -13,5 +13,13 @@ export default defineConfig({
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),
     }
-  }
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: process.env.VITE_API_PROXY_TARGET ?? "http://localhost:5050",
+        changeOrigin: true,
+      },
+    },
+  },
 })

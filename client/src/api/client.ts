@@ -13,7 +13,9 @@ apiClient.interceptors.response.use(
     (error: AxiosError<{ message?: string }>) => {
         const message =
             error.response?.data?.message ??
-            "Something went wrong. Please try again.";
+            (error.request
+                ? "Cannot reach SkillTrack. Check that the API is running and try again."
+                : "Something went wrong. Please try again.");
 
         return Promise.reject(new Error(message));
     }

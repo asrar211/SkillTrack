@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
@@ -53,6 +53,7 @@ function AppRoutes() {
                         element={<SettingsPage />}
                     />
                 </Route>
+                <Route path="*" element={<Navigate to="/" replace />} />
                 </Route>
             </Routes>
             </Suspense>

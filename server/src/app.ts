@@ -27,10 +27,21 @@ app.use(cookieParser());
 app.use(express.json({limit: "1mb"}));
 app.use(helmet());
 
-const allowedOrigins = process.env.CLIENT_URL ?? "https://skilltrack-ala0.onrender.com";
+const allowedOrigins = (process.env.CLIENT_URL ?? "https://skilltrack-ala0.onrender.com")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 app.use(
     cors({
-        origin: allowedOrigins,
+        origin: (origin, callback) => {
+            // API clients and same-origin requests may not send an Origin header.
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+                return;
+            }
+
+            callback(new Error("Origin is not allowed by CORS"));
+        },
         credentials: true,
     })
 );
